@@ -1,6 +1,6 @@
 # load the required packages
 library(shiny)
-require(shinydashboard)
+library(shinydashboard)
 library(plotly)
 library(dplyr)
 
@@ -28,6 +28,9 @@ data_dc <- readRDS("./data/dc.rds")
 data_rdc <- readRDS("./data/rdc.rds")
 data_pack <- readRDS("./data/pack.rds")
 data_bulk <- readRDS("./data/bulk.rds")
+
+dc_data <- readRDS("./data/dc_data.rds")
+rdc_data <- readRDS("./data/rdc_data.rds")
 
 #Dashboard header carrying the title of the dashboard
 header <- dashboardHeader(title = "Logistics KPI")
@@ -228,8 +231,8 @@ server <- function(input, output) {
   
   # Outputs data tables
   #output$dcData <- DT::renderDataTable({ DT::datatable(data_dc %>% dplyr::rename(year_2017=y2017, year_2018=y2018), options = list(pageLength=5))})
-  output$dcData   <-renderDataTable({ data_dc %>% dplyr::rename(year_2017=y2017, year_2018=y2018)})
-  output$rdcData  <-renderDataTable({ data_rdc %>% dplyr::rename(year_2017=y2017, year_2018=y2018)})
+  output$dcData   <-renderDataTable({ dc_data })
+  output$rdcData  <-renderDataTable({ rdc_data })
   output$packData <-renderDataTable({ data_pack %>% dplyr::rename(year_2017=y2017, year_2018=y2018)})
   output$bulkData <-renderDataTable({ data_bulk %>% dplyr::rename(year_2017=y2017, year_2018=y2018)})
   
