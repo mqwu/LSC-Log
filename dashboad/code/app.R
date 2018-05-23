@@ -3,7 +3,7 @@ library(shiny)
 require(shinydashboard)
 library(plotly)
 library(dplyr)
-library(DT)
+
 
 
 #load data
@@ -35,9 +35,9 @@ header <- dashboardHeader(title = "Logistics KPI")
 #Sidebar content of the dashboard
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("HSSE", tabName = "dashboard", icon = icon("dashboard")),
-    menuItem("Finance", icon = icon("dashboard")),
-    menuItem("Performance", icon = icon("dashboard")) 
+    menuItem("HSSE", tabName = "hsse_tab", icon = icon("dashboard")),
+    menuItem("Finance", tabName = "finance_tab", icon = icon("dashboard")),
+    menuItem("Performance", tabName = "perf_tab", icon = icon("dashboard")) 
     # menuItem("Finance", icon = icon("send",lib='glyphicon'), 
     #          href = "https://www.salesforce.com")
   )
@@ -93,9 +93,12 @@ frow3 <- fluidRow(
 )
 
 ## body
-body <- dashboardBody(frow1, frow2, frow3,
-                      
-                      tags$head(tags$style(HTML('
+body <- dashboardBody(
+                      tabItems(
+                        tabItem(tabName = "hsse_tab",
+                                frow1, frow2, frow3,
+                                
+                                tags$head(tags$style(HTML('
                                       .main-sidebar {
                                       font-family: "Georgia", Times, "Times New Roman", serif;
                                       font-weight: bold;
@@ -122,7 +125,19 @@ body <- dashboardBody(frow1, frow2, frow3,
                                       }
                                        
                                   ')))
-                      )
+
+                        ),
+                        
+                        tabItem(tabName = "finance_tab",
+                                h2("finance tab content")
+                        ),
+                        
+                        tabItem(tabName = "perf_tab",
+                                h2("performance tab content")
+                        )
+                        
+                      ) #tabItems end
+                    ) #dashboardBoday end
 
 ## ui
 ui <- dashboardPage(title = 'LSC Logistics', header, sidebar, body, skin='red')
