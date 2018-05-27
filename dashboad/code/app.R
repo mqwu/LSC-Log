@@ -666,7 +666,7 @@ fin_row2 <- fluidRow(
   )  
   ,tabBox(
    width = 12
-   ,title = tags$h2("Total OPEX")
+   #,title = tags$h2("Total OPEX")
    ,tabPanel("Total OPEX", fin_row2_t1_1, fin_row2_t1_2, height = "200px")
    ,tabPanel("@LSC Sales Volume", fin_row2_t2_1, fin_row2_t2_2, height = "200px")
    ,tabPanel("@Primary Freight", fin_row2_t3_1, fin_row2_t3_2, height = "200px")
@@ -682,6 +682,305 @@ fin_row2 <- fluidRow(
    tabPanel("@S&H", fin_row2_t5_1, fin_row2_t5_2, height = "200px")
   )
 )
+
+
+
+## finance tab row 3----------------------------
+## 3.1-------------- 
+fin_row3_t1_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Unit OPEX ($/gal)"
+    ,status = ifelse(fin_data[8,"now_est"] > fin_data[8, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[8,"last_act"] > fin_data[8, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[8,"ytd"] > fin_data[8, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[8,"latest_est"] > fin_data[8, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_fy", height='200px')
+  )
+)
+
+## 3.2 
+fin_row3_t1_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"now_est"] > fin_data[8, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"last_act"] > fin_data[8, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"ytd"] > fin_data[8, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"latest_est"] > fin_data[8, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_fy_var", height='150px')
+  )
+)
+
+## finance tab row 3 combine
+fin_row3 <- fluidRow(
+  tags$head(
+     tags$style(type='text/css', 
+                ".nav-tabs {font-size: 24px; font-weight: bold}")
+  )
+  ,tabBox(
+    width = 12
+   #,title = tags$h2("Unit OPEX")
+   ,tabPanel("Unit OPEX", fin_row3_t1_1, fin_row3_t1_2, height = "200px")
+  )
+)
+
+## finance tab row 4----------------------------
+## 4.1.1-------------- 
+fin_row4_t1_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Logistics Spend (mln$)"
+    ,status = ifelse(fin_data[11,"now_est"] > fin_data[11, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_log_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[11,"last_act"] > fin_data[11, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_log_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[11,"ytd"] > fin_data[11, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_log_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[11,"latest_est"] > fin_data[11, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_log_fy", height='200px')
+  )
+)
+
+## 4.1.2 
+fin_row4_t1_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[11,"now_est"] > fin_data[11, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_log_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[11,"last_act"] > fin_data[11, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_log_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[11,"ytd"] > fin_data[11, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_log_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[11,"latest_est"] > fin_data[11, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_log_fy_var", height='150px')
+  )
+)
+
+## 4.2.1--------------exp 
+fin_row4_t2_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Export (COGS) (mln$)"
+    ,status = ifelse(fin_data[9,"now_est"] > fin_data[9, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_exp_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[9,"last_act"] > fin_data[9, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_exp_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[9,"ytd"] > fin_data[9, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_exp_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[9,"latest_est"] > fin_data[9, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_exp_fy", height='200px')
+  )
+)
+
+## 4.2.2 
+fin_row4_t2_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[9,"now_est"] > fin_data[9, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_exp_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[9,"last_act"] > fin_data[9, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_exp_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[9,"ytd"] > fin_data[9, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_exp_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[9,"latest_est"] > fin_data[9, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_exp_fy_var", height='150px')
+  )
+)
+
+
+
+## 4.3.1--------------scme 
+fin_row4_t3_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "SCME (mln$)"
+    ,status = ifelse(fin_data[10,"now_est"] > fin_data[10, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_scme_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[10,"last_act"] > fin_data[10, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_scme_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[10,"ytd"] > fin_data[10, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_scme_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[10,"latest_est"] > fin_data[10, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_scme_fy", height='200px')
+  )
+)
+
+## 4.3.2 
+fin_row4_t3_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[10,"now_est"] > fin_data[10, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_scme_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[10,"last_act"] > fin_data[10, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_scme_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[10,"ytd"] > fin_data[10, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_scme_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[10,"latest_est"] > fin_data[10, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_scme_fy_var", height='150px')
+  )
+)
+
+## finance tab row 4 combine
+fin_row4 <- fluidRow(
+  tags$head(
+     tags$style(type='text/css', 
+                ".nav-tabs {font-size: 24px; font-weight: bold}")
+  )  
+  ,tabBox(
+   width = 12
+   #,title = tags$h2("Logistics Spend")
+   ,tabPanel("Logistics Spend", fin_row4_t1_1, fin_row4_t1_2, height = "200px")
+   ,tabPanel("@Export (COGS)", fin_row4_t2_1, fin_row4_t2_2, height = "200px")
+   ,tabPanel("@SCME", fin_row4_t3_1, fin_row4_t3_2, height = "200px")
+  )
+)
+
 
   
 #########
@@ -728,6 +1027,8 @@ body <- dashboardBody(
                         tabItem(tabName = "finance_tab",
                                 fin_row1, 
                                 fin_row2, 
+                                fin_row3, 
+                                fin_row4, 
                                
                                 #CSS 
                                 tags$style(HTML("
@@ -1745,6 +2046,497 @@ server <- function(input, output) {
                      y_val = c(fin_data[6,"fy_plan_var_pct"]*100, fin_data[6, "py_var_pct"]*100),
                      col = c(col1, col2),
                      text=c(formatC(fin_data[6,"fy_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[6, "py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+
+
+
+  ## Unit Opex------------------------------------------------------------------------------------------  
+   output$fin_uopex_now <- renderPlotly({
+    col1 = ifelse(fin_data[8,"now_est"]>fin_data[8, "now_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "Unit Opex ($/gal)",
+		     x_val = c("Est","Plan"), 
+                     y_val = c(fin_data[8,"now_est"], fin_data[8, "now_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text = c(formatC(fin_data[8,"now_est"],format="f", digits=1), formatC(fin_data[8, "now_plan"],format="f",digits=1)) 
+	            )
+    
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_uopex_last <- renderPlotly({
+    col1 = ifelse(fin_data[8,"last_act"]>fin_data[8, "last_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "Unit Opex ($/gal)",
+		     x_val = c("Actual","Plan"), 
+      		     y_val = c(fin_data[8,"last_act"], fin_data[8, "last_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[8,"last_act"],format="f",digits=1), formatC(fin_data[8, "last_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_uopex_ytd <- renderPlotly({
+    col1 = ifelse(fin_data[8,"ytd"]>fin_data[8, "ytd_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "Unit Opex ($/gal)",
+		     x_val = c("Actual","Plan"), 
+                     y_val = c(fin_data[8,"ytd"], fin_data[8, "ytd_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[8,"ytd"],format="f",digits=1), formatC(fin_data[8, "ytd_plan"],format="f", digits=1)) 
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+  
+   output$fin_uopex_fy <- renderPlotly({
+    col1 = ifelse(fin_data[8,"latest_est"]>fin_data[8, "fy_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "Unit Opex ($/gal)",
+                     x_val = c("Latest Est", "Plan"),
+                     y_val = c(fin_data[8,"latest_est"], fin_data[8, "fy_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[8,"latest_est"],format="f",digits=1), formatC(fin_data[8, "fy_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+     
+   })
+   
+   ## -----------------------------------------
+   ## Unit Opex Var 
+   ## -----------------------------------------
+   output$fin_uopex_now_var <- renderPlotly({
+    col1 = ifelse(fin_data[8,"now_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[8,"now_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[8,"now_plan_var_pct"]*100, fin_data[8, "now_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[8,"now_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[8, "now_py_var_pct"]*100,format="f",digits=0))
+	            )
+
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_uopex_last_var <- renderPlotly({
+    col1 = ifelse(fin_data[8,"last_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[8,"last_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[8,"last_plan_var_pct"]*100, fin_data[8, "last_py_var_pct"]*100),
+                     col = c(col1, col2),
+      	             text=c(formatC(fin_data[8,"last_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[8, "last_py_var_pct"]*100,format="f", digits=0))
+		   )
+    
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_uopex_ytd_var <- renderPlotly({
+    col1 = ifelse(fin_data[8,"ytd_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[8,"ytd_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[8,"ytd_plan_var_pct"]*100, fin_data[8, "ytd_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[8,"ytd_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[8, "ytd_py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_uopex_fy_var <- renderPlotly({
+    col1 = ifelse(fin_data[8,"fy_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[8,"py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[8,"fy_plan_var_pct"]*100, fin_data[8, "py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[8,"fy_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[8, "py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+
+
+
+  ## Logistics Spend---------------------------------------------------------------------------------  
+   output$fin_log_now <- renderPlotly({
+    col1 = ifelse(fin_data[11,"now_est"]>fin_data[11, "now_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "Logistics Spend (mln$)",
+		     x_val = c("Est","Plan"), 
+                     y_val = c(fin_data[11,"now_est"], fin_data[11, "now_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text = c(formatC(fin_data[11,"now_est"],format="f", digits=1), formatC(fin_data[11, "now_plan"],format="f",digits=1)) 
+	            )
+    
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_log_last <- renderPlotly({
+    col1 = ifelse(fin_data[11,"last_act"]>fin_data[11, "last_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "Logistics Spend (mln$)",
+		     x_val = c("Actual","Plan"), 
+      		     y_val = c(fin_data[11,"last_act"], fin_data[11, "last_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[11,"last_act"],format="f",digits=1), formatC(fin_data[11, "last_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_log_ytd <- renderPlotly({
+    col1 = ifelse(fin_data[11,"ytd"]>fin_data[11, "ytd_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "Logistics Spend (mln$)",
+		     x_val = c("Actual","Plan"), 
+                     y_val = c(fin_data[11,"ytd"], fin_data[11, "ytd_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[11,"ytd"],format="f",digits=1), formatC(fin_data[11, "ytd_plan"],format="f", digits=1)) 
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+  
+   output$fin_log_fy <- renderPlotly({
+    col1 = ifelse(fin_data[11,"latest_est"]>fin_data[11, "fy_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "Logistics Spend (mln$)",
+                     x_val = c("Latest Est", "Plan"),
+                     y_val = c(fin_data[11,"latest_est"], fin_data[11, "fy_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[11,"latest_est"],format="f",digits=1), formatC(fin_data[11, "fy_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+     
+   })
+   
+   ## -----------------------------------------
+   ## Log Spend Var 
+   ## -----------------------------------------
+   output$fin_log_now_var <- renderPlotly({
+    col1 = ifelse(fin_data[11,"now_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[11,"now_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[11,"now_plan_var_pct"]*100, fin_data[11, "now_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[11,"now_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[11, "now_py_var_pct"]*100,format="f",digits=0))
+	            )
+
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_log_last_var <- renderPlotly({
+    col1 = ifelse(fin_data[11,"last_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[11,"last_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[11,"last_plan_var_pct"]*100, fin_data[11, "last_py_var_pct"]*100),
+                     col = c(col1, col2),
+      	             text=c(formatC(fin_data[11,"last_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[11, "last_py_var_pct"]*100,format="f", digits=0))
+		   )
+    
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_log_ytd_var <- renderPlotly({
+    col1 = ifelse(fin_data[11,"ytd_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[11,"ytd_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[11,"ytd_plan_var_pct"]*100, fin_data[11, "ytd_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[11,"ytd_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[11, "ytd_py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_log_fy_var <- renderPlotly({
+    col1 = ifelse(fin_data[11,"fy_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[11,"py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[11,"fy_plan_var_pct"]*100, fin_data[11, "py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[11,"fy_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[11, "py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+
+
+
+  ## Logistics Spend Export------------------------------------------------------------------------------  
+   output$fin_exp_now <- renderPlotly({
+    col1 = ifelse(fin_data[9,"now_est"]>fin_data[9, "now_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "Export (COGS) (mln$)",
+		     x_val = c("Est","Plan"), 
+                     y_val = c(fin_data[9,"now_est"], fin_data[9, "now_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text = c(formatC(fin_data[9,"now_est"],format="f", digits=1), formatC(fin_data[9, "now_plan"],format="f",digits=1)) 
+	            )
+    
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_exp_last <- renderPlotly({
+    col1 = ifelse(fin_data[9,"last_act"]>fin_data[9, "last_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "Export (COGS) (mln$)",
+		     x_val = c("Actual","Plan"), 
+      		     y_val = c(fin_data[9,"last_act"], fin_data[9, "last_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[9,"last_act"],format="f",digits=1), formatC(fin_data[9, "last_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_exp_ytd <- renderPlotly({
+    col1 = ifelse(fin_data[9,"ytd"]>fin_data[9, "ytd_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "Export (COGS) (mln$)",
+		     x_val = c("Actual","Plan"), 
+                     y_val = c(fin_data[9,"ytd"], fin_data[9, "ytd_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[9,"ytd"],format="f",digits=1), formatC(fin_data[9, "ytd_plan"],format="f", digits=1)) 
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+  
+   output$fin_exp_fy <- renderPlotly({
+    col1 = ifelse(fin_data[9,"latest_est"]>fin_data[9, "fy_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "Export (COGS) (mln$)",
+                     x_val = c("Latest Est", "Plan"),
+                     y_val = c(fin_data[9,"latest_est"], fin_data[9, "fy_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[9,"latest_est"],format="f",digits=1), formatC(fin_data[9, "fy_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+     
+   })
+   
+   ## -----------------------------------------
+   ## Log Spend Var 
+   ## -----------------------------------------
+   output$fin_exp_now_var <- renderPlotly({
+    col1 = ifelse(fin_data[9,"now_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[9,"now_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[9,"now_plan_var_pct"]*100, fin_data[9, "now_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[9,"now_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[9, "now_py_var_pct"]*100,format="f",digits=0))
+	            )
+
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_exp_last_var <- renderPlotly({
+    col1 = ifelse(fin_data[9,"last_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[9,"last_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[9,"last_plan_var_pct"]*100, fin_data[9, "last_py_var_pct"]*100),
+                     col = c(col1, col2),
+      	             text=c(formatC(fin_data[9,"last_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[9, "last_py_var_pct"]*100,format="f", digits=0))
+		   )
+    
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_exp_ytd_var <- renderPlotly({
+    col1 = ifelse(fin_data[9,"ytd_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[9,"ytd_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[9,"ytd_plan_var_pct"]*100, fin_data[9, "ytd_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[9,"ytd_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[9, "ytd_py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_exp_fy_var <- renderPlotly({
+    col1 = ifelse(fin_data[9,"fy_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[9,"py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[9,"fy_plan_var_pct"]*100, fin_data[9, "py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[9,"fy_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[9, "py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+   
+
+  ## Logistics Spend SCME------------------------------------------------------------------------------  
+   output$fin_scme_now <- renderPlotly({
+    col1 = ifelse(fin_data[10,"now_est"]>fin_data[10, "now_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "SCME (mln$)",
+		     x_val = c("Est","Plan"), 
+                     y_val = c(fin_data[10,"now_est"], fin_data[10, "now_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text = c(formatC(fin_data[10,"now_est"],format="f", digits=1), formatC(fin_data[10, "now_plan"],format="f",digits=1)) 
+	            )
+    
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_scme_last <- renderPlotly({
+    col1 = ifelse(fin_data[10,"last_act"]>fin_data[10, "last_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "SCME (mln$)",
+		     x_val = c("Actual","Plan"), 
+      		     y_val = c(fin_data[10,"last_act"], fin_data[10, "last_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[10,"last_act"],format="f",digits=1), formatC(fin_data[10, "last_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_scme_ytd <- renderPlotly({
+    col1 = ifelse(fin_data[10,"ytd"]>fin_data[10, "ytd_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "SCME (mln$)",
+		     x_val = c("Actual","Plan"), 
+                     y_val = c(fin_data[10,"ytd"], fin_data[10, "ytd_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[10,"ytd"],format="f",digits=1), formatC(fin_data[10, "ytd_plan"],format="f", digits=1)) 
+	            )
+     
+     p$elementId <- NULL
+     p
+     
+   })
+  
+   output$fin_scme_fy <- renderPlotly({
+    col1 = ifelse(fin_data[10,"latest_est"]>fin_data[10, "fy_plan"], "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "SCME (mln$)",
+                     x_val = c("Latest Est", "Plan"),
+                     y_val = c(fin_data[10,"latest_est"], fin_data[10, "fy_plan"]),
+                     col = c(col1, "rgb(255,213,0)"),
+                     text=c(formatC(fin_data[10,"latest_est"],format="f",digits=1), formatC(fin_data[10, "fy_plan"],format="f", digits=1))
+	            )
+     p$elementId <- NULL
+     p
+     
+   })
+   
+   ## -----------------------------------------
+   ## Log Spend Var 
+   ## -----------------------------------------
+   output$fin_scme_now_var <- renderPlotly({
+    col1 = ifelse(fin_data[10,"now_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[10,"now_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = this_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[10,"now_plan_var_pct"]*100, fin_data[10, "now_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[10,"now_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[10, "now_py_var_pct"]*100,format="f",digits=0))
+	            )
+
+     p$elementId <- NULL
+     p
+   })
+
+   output$fin_scme_last_var <- renderPlotly({
+    col1 = ifelse(fin_data[10,"last_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[10,"last_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = last_mon, 
+		     y_title = "Var (%)",
+		     x_val = c("2018","2017"), 
+                     y_val = c(fin_data[10,"last_plan_var_pct"]*100, fin_data[10, "last_py_var_pct"]*100),
+                     col = c(col1, col2),
+      	             text=c(formatC(fin_data[10,"last_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[10, "last_py_var_pct"]*100,format="f", digits=0))
+		   )
+    
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_scme_ytd_var <- renderPlotly({
+    col1 = ifelse(fin_data[10,"ytd_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[10,"ytd_py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "YTD", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[10,"ytd_plan_var_pct"]*100, fin_data[10, "ytd_py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[10,"ytd_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[10, "ytd_py_var_pct"]*100,format="f", digits=0))
+	            )
+     
+     p$elementId <- NULL
+     p
+   })
+  
+   output$fin_scme_fy_var <- renderPlotly({
+    col1 = ifelse(fin_data[10,"fy_plan_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    col2 = ifelse(fin_data[10,"py_var_pct"]>0, "rgb(221,75,57)", "rgb(32, 207, 155)")
+    p <- call_plotly(x_title = "Full Year", 
+		     y_title = "Var (%)",
+                     x_val = c("2018", "2017"),
+                     y_val = c(fin_data[10,"fy_plan_var_pct"]*100, fin_data[10, "py_var_pct"]*100),
+                     col = c(col1, col2),
+                     text=c(formatC(fin_data[10,"fy_plan_var_pct"]*100,format="f", digits=0), formatC(fin_data[10, "py_var_pct"]*100,format="f", digits=0))
 	            )
      
      p$elementId <- NULL
