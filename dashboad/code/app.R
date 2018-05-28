@@ -163,8 +163,18 @@ hsse_row3 <- fluidRow(
 # Finance tab 
 #------------------------------------------------------------------------------------------------
 
-## finance tab row 1----------------------------
+######################################################
+## finance tab row 1
+######################################################
 fin_row1 <- fluidRow(
+  box(
+    width = 4
+    ,title = "Logistics Spend (mln$)"
+    ,status = ifelse(fin_data[11,"now_est"] > fin_data[11, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,htmlOutput("fin_log")
+  ),
   box(
     width = 4
     ,title = "Total OPEX (mln$)"
@@ -180,594 +190,16 @@ fin_row1 <- fluidRow(
     ,solidHeader = TRUE 
     ,collapsible = TRUE 
     ,htmlOutput("fin_unit_opex")
-  ),
-  box(
-    width = 4
-    ,title = "Logistics Spend (mln$)"
-    ,status = ifelse(fin_data[11,"now_est"] > fin_data[11, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,htmlOutput("fin_log")
   )
 )
 
-## finance tab row 2----------------------------
-## 2.1.1-------------- 
+
+######################################################
+## finance tab row 2
+######################################################
+#----------------------------------------------------------------------------------------------
+## Log Spend 
 fin_row2_t1_1 <- fluidRow(
-  box(
-    width = 3
-    ,title = "Total OPEX (mln$)"
-    ,status = ifelse(fin_data[7,"now_est"] > fin_data[7, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_opex_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[7,"last_act"] > fin_data[7, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_opex_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[7,"ytd"] > fin_data[7, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_opex_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[7,"latest_est"] > fin_data[7, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_opex_fy", height='200px')
-  )
-)
-
-## 2.1.2 
-fin_row2_t1_2 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[7,"now_est"] > fin_data[7, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_opex_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[7,"last_act"] > fin_data[7, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_opex_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[7,"ytd"] > fin_data[7, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_opex_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[7,"latest_est"] > fin_data[7, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_opex_fy_var", height='150px')
-  )
-)
-
-## 2.2.1----------------------------------- 
-fin_row2_t2_1 <- fluidRow(
-  box(
-    width = 3
-    ,title = "LSC Sales Volume (mln gal)"
-    ,status = ifelse(fin_data[1,"now_est"] < fin_data[1, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sales_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[1,"last_act"] < fin_data[1, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sales_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[1,"ytd"] < fin_data[1, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sales_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[1,"latest_est"] < fin_data[1, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sales_fy", height='200px')
-  )
-)
-
-## 2.2.2 
-fin_row2_t2_2 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[1,"now_est"] < fin_data[1, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_sales_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[1,"last_act"] < fin_data[1, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_sales_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[1,"ytd"] < fin_data[1, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_sales_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[1,"latest_est"] < fin_data[1, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_sales_fy_var", height='150px')
-  )
-)
-
-## 2.3.1-------------- 
-fin_row2_t3_1 <- fluidRow(
-  box(
-    width = 3
-    ,title = "Primary Freight (mln$)"
-    ,status = ifelse(fin_data[2,"now_est"] > fin_data[2, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_1fr_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[2,"last_act"] > fin_data[2, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_1fr_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[2,"ytd"] > fin_data[2, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_1fr_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[2,"latest_est"] > fin_data[2, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_1fr_fy", height='200px')
-  )
-)
-
-## 2.3.2 
-fin_row2_t3_2 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[2,"now_est"] > fin_data[2, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_1fr_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[2,"last_act"] > fin_data[2, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_1fr_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[2,"ytd"] > fin_data[2, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_1fr_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[2,"latest_est"] > fin_data[2, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_1fr_fy_var", height='150px')
-  )
-)
-
-## 2.4.1-------------- 
-fin_row2_t4_1 <- fluidRow(
-  box(
-    width = 3
-    ,title = "Secondary Freight (mln$)"
-    ,status = ifelse(fin_data[3,"now_est"] > fin_data[3, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2fr_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[3,"last_act"] > fin_data[3, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2fr_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[3,"ytd"] > fin_data[3, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2fr_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[3,"latest_est"] > fin_data[3, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2fr_fy", height='200px')
-  )
-)
-
-## 2.4.2 
-fin_row2_t4_2 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[3,"now_est"] > fin_data[3, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_2fr_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[3,"last_act"] > fin_data[3, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_2fr_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[3,"ytd"] > fin_data[3, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_2fr_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[3,"latest_est"] > fin_data[3, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_2fr_fy_var", height='150px')
-  )
-)
-
-
-## 2.4.1.1-------------- 
-fin_row2_t4_1_1 <- fluidRow(
-  box(
-    width = 3
-    ,title = "Direct Trans (mln$)"
-    ,status = ifelse(fin_data[4,"now_est"] > fin_data[4, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdt_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[4,"last_act"] > fin_data[4, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdt_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[4,"ytd"] > fin_data[4, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdt_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[4,"latest_est"] > fin_data[4, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdt_fy", height='200px')
-  )
-)
-
-## 2.4.2.1 
-fin_row2_t4_2_1 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[4,"now_est"] > fin_data[4, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdt_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[4,"last_act"] > fin_data[4, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdt_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[4,"ytd"] > fin_data[4, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdt_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[4,"latest_est"] > fin_data[4, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdt_fy_var", height='150px')
-  )
-)
-
-## 2.4.1.2-------------- 
-fin_row2_t4_1_2 <- fluidRow(
-  box(
-    width = 3
-    ,title = "DFOA (mln$)"
-    ,status = ifelse(fin_data[5,"now_est"] > fin_data[5, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdfoa_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[5,"last_act"] > fin_data[5, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdfoa_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[5,"ytd"] > fin_data[5, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdfoa_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[5,"latest_est"] > fin_data[5, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_2frdfoa_fy", height='200px')
-  )
-)
-
-## 2.4.2.2 
-fin_row2_t4_2_2 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[5,"now_est"] > fin_data[5, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdfoa_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[5,"last_act"] > fin_data[5, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdfoa_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[5,"ytd"] > fin_data[5, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdfoa_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[5,"latest_est"] > fin_data[5, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_2frdfoa_fy_var", height='150px')
-  )
-)
-
-
-## 2.5.1-------------- 
-fin_row2_t5_1 <- fluidRow(
-  box(
-    width = 3
-    ,title = "S&H Expense (mln$)"
-    ,status = ifelse(fin_data[6,"now_est"] > fin_data[6, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sh_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[6,"last_act"] > fin_data[6, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sh_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[6,"ytd"] > fin_data[6, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sh_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[6,"latest_est"] > fin_data[6, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_sh_fy", height='200px')
-  )
-)
-
-## 2.5.2 
-fin_row2_t5_2 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[6,"now_est"] > fin_data[6, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_sh_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[6,"last_act"] > fin_data[6, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_sh_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[6,"ytd"] > fin_data[6, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_sh_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[6,"latest_est"] > fin_data[6, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_sh_fy_var", height='150px')
-  )
-)
-
-
-
-## finance tab row 2 combine
-fin_row2 <- fluidRow(
-  tags$head(
-     tags$style(type='text/css', 
-                ".nav-tabs {font-size: 24px; font-weight: bold}")
-  )  
-  ,tabBox(
-   width = 12
-   #,title = tags$h2("Total OPEX")
-   ,tabPanel("Total OPEX", fin_row2_t1_1, fin_row2_t1_2, height = "200px")
-   ,tabPanel("@LSC Sales Volume", fin_row2_t2_1, fin_row2_t2_2, height = "200px")
-   ,tabPanel("@Primary Freight", fin_row2_t3_1, fin_row2_t3_2, height = "200px")
-   ,tabPanel("@Secondary Freight" 
-           ,tabBox( 
-		   width = 12
-		   ,title = tags$h2("Secondary Freight")
-		   	,tabPanel("Secondary Freight", fin_row2_t4_1, fin_row2_t4_2, height = "200px") 
-		   	,tabPanel("@Direct Trans", fin_row2_t4_1_1, fin_row2_t4_2_1, height = "200px")
-		   	,tabPanel("@DFOA", fin_row2_t4_1_2, fin_row2_t4_2_2, height = "200px")
-            	)
-	),
-   tabPanel("@S&H", fin_row2_t5_1, fin_row2_t5_2, height = "200px")
-  )
-)
-
-
-
-## finance tab row 3----------------------------
-## 3.1-------------- 
-fin_row3_t1_1 <- fluidRow(
-  box(
-    width = 3
-    ,title = "Unit OPEX ($/gal)"
-    ,status = ifelse(fin_data[8,"now_est"] > fin_data[8, "now_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_uopex_now", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = "" 
-    ,status = ifelse(fin_data[8,"last_act"] > fin_data[8, "last_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_uopex_last", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[8,"ytd"] > fin_data[8, "ytd_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_uopex_ytd", height='200px')
-  ),
-  
-  box(
-    width = 3
-    ,title = ""
-    ,status = ifelse(fin_data[8,"latest_est"] > fin_data[8, "fy_plan"], "danger","success") 
-    ,solidHeader = TRUE 
-    ,collapsible = TRUE 
-    ,plotlyOutput("fin_uopex_fy", height='200px')
-  )
-)
-
-## 3.2 
-fin_row3_t1_2 <- fluidRow(
-  box(
-    width = 3
-    ,status = ifelse(fin_data[8,"now_est"] > fin_data[8, "now_plan"], "danger","success")
-    ,plotlyOutput("fin_uopex_now_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[8,"last_act"] > fin_data[8, "last_plan"], "danger","success")
-    ,plotlyOutput("fin_uopex_last_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[8,"ytd"] > fin_data[8, "ytd_plan"], "danger","success")
-    ,plotlyOutput("fin_uopex_ytd_var", height='150px')
-  ),
-
-  box(
-    width = 3
-    ,status = ifelse(fin_data[8,"latest_est"] > fin_data[8, "fy_plan"], "danger","success")
-    ,plotlyOutput("fin_uopex_fy_var", height='150px')
-  )
-)
-
-## finance tab row 3 combine
-fin_row3 <- fluidRow(
-  tags$head(
-     tags$style(type='text/css', 
-                ".nav-tabs {font-size: 24px; font-weight: bold}")
-  )
-  ,tabBox(
-    width = 12
-   #,title = tags$h2("Unit OPEX")
-   ,tabPanel("Unit OPEX", fin_row3_t1_1, fin_row3_t1_2, height = "200px")
-  )
-)
-
-## finance tab row 4----------------------------
-## 4.1.1-------------- 
-fin_row4_t1_1 <- fluidRow(
   box(
     width = 3
     ,title = "Logistics Spend (mln$)"
@@ -805,8 +237,7 @@ fin_row4_t1_1 <- fluidRow(
   )
 )
 
-## 4.1.2 
-fin_row4_t1_2 <- fluidRow(
+fin_row2_t1_2 <- fluidRow(
   box(
     width = 3
     ,status = ifelse(fin_data[11,"now_est"] > fin_data[11, "now_plan"], "danger","success")
@@ -831,9 +262,9 @@ fin_row4_t1_2 <- fluidRow(
     ,plotlyOutput("fin_log_fy_var", height='150px')
   )
 )
-
-## 4.2.1--------------exp 
-fin_row4_t2_1 <- fluidRow(
+#----------------------------------------------------------------------------------------------
+## Log-Exp
+fin_row2_t3_1 <- fluidRow(
   box(
     width = 3
     ,title = "Export (COGS) (mln$)"
@@ -871,8 +302,7 @@ fin_row4_t2_1 <- fluidRow(
   )
 )
 
-## 4.2.2 
-fin_row4_t2_2 <- fluidRow(
+fin_row2_t3_2 <- fluidRow(
   box(
     width = 3
     ,status = ifelse(fin_data[9,"now_est"] > fin_data[9, "now_plan"], "danger","success")
@@ -897,11 +327,9 @@ fin_row4_t2_2 <- fluidRow(
     ,plotlyOutput("fin_exp_fy_var", height='150px')
   )
 )
-
-
-
-## 4.3.1--------------scme 
-fin_row4_t3_1 <- fluidRow(
+#----------------------------------------------------------------------------------------------
+## Log-scme 
+fin_row2_t4_1 <- fluidRow(
   box(
     width = 3
     ,title = "SCME (mln$)"
@@ -939,8 +367,7 @@ fin_row4_t3_1 <- fluidRow(
   )
 )
 
-## 4.3.2 
-fin_row4_t3_2 <- fluidRow(
+fin_row2_t4_2 <- fluidRow(
   box(
     width = 3
     ,status = ifelse(fin_data[10,"now_est"] > fin_data[10, "now_plan"], "danger","success")
@@ -965,9 +392,533 @@ fin_row4_t3_2 <- fluidRow(
     ,plotlyOutput("fin_scme_fy_var", height='150px')
   )
 )
+#----------------------------------------------------------------------------------------------
+## Log-opex
+# opex
+fin_row2_t2_t1_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Total OPEX (mln$)"
+    ,status = ifelse(fin_data[7,"now_est"] > fin_data[7, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_opex_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[7,"last_act"] > fin_data[7, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_opex_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[7,"ytd"] > fin_data[7, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_opex_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[7,"latest_est"] > fin_data[7, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_opex_fy", height='200px')
+  )
+)
 
-## finance tab row 4 combine
-fin_row4 <- fluidRow(
+
+fin_row2_t2_t1_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[7,"now_est"] > fin_data[7, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_opex_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[7,"last_act"] > fin_data[7, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_opex_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[7,"ytd"] > fin_data[7, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_opex_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[7,"latest_est"] > fin_data[7, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_opex_fy_var", height='150px')
+  )
+)
+#----------------------------------------------------------------------------------------------
+# unit opex
+fin_row2_t2_t1_3 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Unit OPEX ($/gal)"
+    ,status = ifelse(fin_data[8,"now_est"] > fin_data[8, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[8,"last_act"] > fin_data[8, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[8,"ytd"] > fin_data[8, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[8,"latest_est"] > fin_data[8, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_uopex_fy", height='200px')
+  )
+)
+
+fin_row2_t2_t1_4 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"now_est"] > fin_data[8, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"last_act"] > fin_data[8, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"ytd"] > fin_data[8, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[8,"latest_est"] > fin_data[8, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_uopex_fy_var", height='150px')
+  )
+)
+#----------------------------------------------------------------------------------------------
+# sales vol 
+fin_row2_t2_t2_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "LSC Sales Volume (mln gal)"
+    ,status = ifelse(fin_data[1,"now_est"] < fin_data[1, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sales_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[1,"last_act"] < fin_data[1, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sales_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[1,"ytd"] < fin_data[1, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sales_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[1,"latest_est"] < fin_data[1, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sales_fy", height='200px')
+  )
+)
+
+fin_row2_t2_t2_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[1,"now_est"] < fin_data[1, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_sales_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[1,"last_act"] < fin_data[1, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_sales_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[1,"ytd"] < fin_data[1, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_sales_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[1,"latest_est"] < fin_data[1, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_sales_fy_var", height='150px')
+  )
+)
+#----------------------------------------------------------------------------------------------
+# Primary frt
+fin_row2_t2_t3_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Primary Freight (mln$)"
+    ,status = ifelse(fin_data[2,"now_est"] > fin_data[2, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_1fr_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[2,"last_act"] > fin_data[2, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_1fr_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[2,"ytd"] > fin_data[2, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_1fr_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[2,"latest_est"] > fin_data[2, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_1fr_fy", height='200px')
+  )
+)
+
+fin_row2_t2_t3_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[2,"now_est"] > fin_data[2, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_1fr_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[2,"last_act"] > fin_data[2, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_1fr_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[2,"ytd"] > fin_data[2, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_1fr_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[2,"latest_est"] > fin_data[2, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_1fr_fy_var", height='150px')
+  )
+)
+#----------------------------------------------------------------------------------------------
+# 2nd frt
+fin_row2_t2_t4_t1_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Secondary Freight (mln$)"
+    ,status = ifelse(fin_data[3,"now_est"] > fin_data[3, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2fr_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[3,"last_act"] > fin_data[3, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2fr_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[3,"ytd"] > fin_data[3, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2fr_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[3,"latest_est"] > fin_data[3, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2fr_fy", height='200px')
+  )
+)
+
+fin_row2_t2_t4_t1_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[3,"now_est"] > fin_data[3, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_2fr_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[3,"last_act"] > fin_data[3, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_2fr_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[3,"ytd"] > fin_data[3, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_2fr_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[3,"latest_est"] > fin_data[3, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_2fr_fy_var", height='150px')
+  )
+)
+#----------------------------------------------------------------------------------------------
+# dir trans
+fin_row2_t2_t4_t2_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "Direct Trans (mln$)"
+    ,status = ifelse(fin_data[4,"now_est"] > fin_data[4, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdt_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[4,"last_act"] > fin_data[4, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdt_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[4,"ytd"] > fin_data[4, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdt_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[4,"latest_est"] > fin_data[4, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdt_fy", height='200px')
+  )
+)
+
+fin_row2_t2_t4_t2_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[4,"now_est"] > fin_data[4, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdt_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[4,"last_act"] > fin_data[4, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdt_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[4,"ytd"] > fin_data[4, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdt_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[4,"latest_est"] > fin_data[4, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdt_fy_var", height='150px')
+  )
+)
+#----------------------------------------------------------------------------------------------
+# dfoa
+fin_row2_t2_t4_t3_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "DFOA (mln$)"
+    ,status = ifelse(fin_data[5,"now_est"] > fin_data[5, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdfoa_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[5,"last_act"] > fin_data[5, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdfoa_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[5,"ytd"] > fin_data[5, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdfoa_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[5,"latest_est"] > fin_data[5, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_2frdfoa_fy", height='200px')
+  )
+)
+
+fin_row2_t2_t4_t3_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[5,"now_est"] > fin_data[5, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdfoa_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[5,"last_act"] > fin_data[5, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdfoa_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[5,"ytd"] > fin_data[5, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdfoa_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[5,"latest_est"] > fin_data[5, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_2frdfoa_fy_var", height='150px')
+  )
+)
+#----------------------------------------------------------------------------------------------
+# s&h
+fin_row2_t2_t5_1 <- fluidRow(
+  box(
+    width = 3
+    ,title = "S&H Expense (mln$)"
+    ,status = ifelse(fin_data[6,"now_est"] > fin_data[6, "now_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sh_now", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = "" 
+    ,status = ifelse(fin_data[6,"last_act"] > fin_data[6, "last_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sh_last", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[6,"ytd"] > fin_data[6, "ytd_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sh_ytd", height='200px')
+  ),
+  
+  box(
+    width = 3
+    ,title = ""
+    ,status = ifelse(fin_data[6,"latest_est"] > fin_data[6, "fy_plan"], "danger","success") 
+    ,solidHeader = TRUE 
+    ,collapsible = TRUE 
+    ,plotlyOutput("fin_sh_fy", height='200px')
+  )
+)
+
+fin_row2_t2_t5_2 <- fluidRow(
+  box(
+    width = 3
+    ,status = ifelse(fin_data[6,"now_est"] > fin_data[6, "now_plan"], "danger","success")
+    ,plotlyOutput("fin_sh_now_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[6,"last_act"] > fin_data[6, "last_plan"], "danger","success")
+    ,plotlyOutput("fin_sh_last_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[6,"ytd"] > fin_data[6, "ytd_plan"], "danger","success")
+    ,plotlyOutput("fin_sh_ytd_var", height='150px')
+  ),
+
+  box(
+    width = 3
+    ,status = ifelse(fin_data[6,"latest_est"] > fin_data[6, "fy_plan"], "danger","success")
+    ,plotlyOutput("fin_sh_fy_var", height='150px')
+  )
+)
+
+
+#==============================================================================================
+## finance tab row 2 structure 
+fin_row2 <- fluidRow(
   tags$head(
      tags$style(type='text/css', 
                 ".nav-tabs {font-size: 24px; font-weight: bold}")
@@ -975,14 +926,36 @@ fin_row4 <- fluidRow(
   ,tabBox(
    width = 12
    #,title = tags$h2("Logistics Spend")
-   ,tabPanel("Logistics Spend", fin_row4_t1_1, fin_row4_t1_2, height = "200px")
-   ,tabPanel("@Export (COGS)", fin_row4_t2_1, fin_row4_t2_2, height = "200px")
-   ,tabPanel("@SCME", fin_row4_t3_1, fin_row4_t3_2, height = "200px")
-  )
+   ,tabPanel("Logistics Spend", fin_row2_t1_1, fin_row2_t1_2, height = "200px")
+   ,tabPanel("@Total OPEX"
+		,tabBox( 
+   			width = 12
+		        #,title = tags$h2("Total OPEX")
+		   	,tabPanel("Total OPEX", 
+		           	  fin_row2_t2_t1_1, fin_row2_t2_t1_2, 
+                                  fin_row2_t2_t1_3, fin_row2_t2_t1_4, height = "200px")
+		   	,tabPanel("#LSC Sales Volume", fin_row2_t2_t2_1, fin_row2_t2_t2_2, height = "200px")
+		   	,tabPanel("#Primary Freight", fin_row2_t2_t3_1, fin_row2_t2_t3_2, height = "200px")
+		   	,tabPanel("#Secondary Freight"
+				,tabBox(
+					width = 12
+					,tabPanel("Secondary Freight", 
+				        	  fin_row2_t2_t4_t1_1, fin_row2_t2_t4_t1_2, height = "200px")
+					,tabPanel("#Direct Trans", 
+				        	  fin_row2_t2_t4_t2_1, fin_row2_t2_t4_t2_2, height = "200px")
+					,tabPanel("#DFOA", 
+				        	  fin_row2_t2_t4_t3_1, fin_row2_t2_t4_t3_2, height = "200px")
+					)
+				) # 2nd frt end
+		   	,tabPanel("#S&H", fin_row2_t2_t5_1, fin_row2_t2_t5_2, height = "200px")
+			) 
+	)# tot opex end
+   ,tabPanel("@Export (COGS)", fin_row2_t3_1, fin_row2_t3_2, height = "200px")
+   ,tabPanel("@SCME", fin_row2_t4_1, fin_row2_t4_2, height = "200px")
+   )
 )
+#==============================================================================================
 
-
-  
 #########
 ## body 
 #########
@@ -1027,8 +1000,6 @@ body <- dashboardBody(
                         tabItem(tabName = "finance_tab",
                                 fin_row1, 
                                 fin_row2, 
-                                fin_row3, 
-                                fin_row4, 
                                
                                 #CSS 
                                 tags$style(HTML("
