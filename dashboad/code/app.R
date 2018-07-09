@@ -3,6 +3,9 @@ library(shiny)
 library(shinydashboard)
 library(plotly)
 library(dplyr)
+library(DT)
+library(kableExtra)
+library(formattable)
 
 
 
@@ -87,6 +90,20 @@ rdc_data <- readRDS("./data/rdc_data.rds")
 fin_data <- readRDS("./data/fin_data.rds")
 
 
+## Performance data
+# ware house
+wh_lobp <- readRDS("./data/wh_lobp_data.rds")
+wh_rdc  <- readRDS("./data/wh_rdc_data.rds")
+
+# otif
+otif_wk <- readRDS("./data/otif_wk_data.rds")
+otif_by_plant <- readRDS("./data/otif_by_plant_data.rds")
+otif_by_customer <- readRDS("./data/otif_by_customer_data.rds")
+
+# carrier 
+scar_n_by_carr <- readRDS("./data/scar_n_carr_data.rds")
+scar_n_by_carr_plant <- readRDS("./data/scar_n_carr_plant_data.rds")
+
 
 ##################################################################################################
 # Header
@@ -100,12 +117,16 @@ header <- dashboardHeader(title = "Logistics KPI")
 ##################################################################################################
 #Sidebar content of the dashboard
 sidebar <- dashboardSidebar(
-  sidebarMenu(
-    menuItem("HSSE", tabName = "hsse_tab", icon = icon("dashboard")),
-    menuItem("Finance", tabName = "finance_tab", icon = icon("dashboard")),
-    menuItem("Performance", tabName = "perf_tab", icon = icon("dashboard")) 
-  )
-)
+		sidebarMenu(
+			menuItem("HSSE", tabName = "hsse_tab", icon = icon("dashboard")),
+			menuItem("Finance", tabName = "finance_tab", icon = icon("dashboard")),
+			menuItem("Performance", icon = icon("dashboard"), startExpanded = TRUE,
+				menuSubItem("OTIF", tabName = "otif_tab"),
+				menuSubItem("WARE HOUSE", tabName = "wh_tab"),
+				menuSubItem("CARRIER", tabName = "carr_tab")
+				) 
+			)
+		)
 
 
 ##################################################################################################
@@ -159,6 +180,9 @@ hsse_row3 <- fluidRow(
  )
 )
 
+
+
+
 #------------------------------------------------------------------------------------------------
 # Finance tab 
 #------------------------------------------------------------------------------------------------
@@ -169,7 +193,7 @@ hsse_row3 <- fluidRow(
 fin_row1 <- fluidRow(
   box(
     width = 4
-    ,title = "Logistics Spend (mln$)"
+    ,title = paste0("Logistics Spend (mln$)   ", this_mon, ", 2018")
     ,status = ifelse(fin_data[11,"now_est"] > fin_data[11, "now_plan"], "danger","success") 
     ,solidHeader = TRUE 
     ,collapsible = TRUE 
@@ -177,7 +201,7 @@ fin_row1 <- fluidRow(
   ),
   box(
     width = 4
-    ,title = "Total OPEX (mln$)"
+    ,title = paste0("Total OPEX (mln$)   ", this_mon, ", 2018")
     ,status = ifelse(fin_data[7,"now_est"] > fin_data[7, "now_plan"], "danger","success") 
     ,solidHeader = TRUE 
     ,collapsible = TRUE 
@@ -185,7 +209,7 @@ fin_row1 <- fluidRow(
   ),
   box(
     width = 4
-    ,title = "Unit OPEX (mln$)"
+    ,title = paste0("Unit OPEX (mln$)   ", this_mon, ", 2018")
     ,status = ifelse(fin_data[8,"now_est"] > fin_data[8, "now_plan"], "danger","success") 
     ,solidHeader = TRUE 
     ,collapsible = TRUE 
@@ -956,6 +980,160 @@ fin_row2 <- fluidRow(
 )
 #==============================================================================================
 
+#------------------------------------------------------------------------------------------------
+## Performance : Ware House 
+#------------------------------------------------------------------------------------------------
+wh_row1 <- fluidRow(
+
+		box(
+			width = 6 
+			,title = "WARE HOUSE: LOBP Weekly Capacity Trend"
+			,status = "primary" 
+			,solidHeader = TRUE 
+			,collapsible = TRUE 
+
+			,tags$head(
+				tags$style(type='text/css', 
+					".nav-tabs {font-size: 24px; font-weight: bold}")
+				)  
+			,tabBox(
+				width = 12,
+			#title = tags$h2("LOBPs Weekly Capacity"), 
+				tabPanel("Plot", plotlyOutput("wh_lobp"), height = "200px"),
+				tabPanel("Data", div(dataTableOutput('wh_lobpData'), style="font-size: 16px"))
+			       )
+		   ),
+
+		box(
+				width = 6 
+				,title = "WARE HOUSE: RDC Weekly Capacity Trend"
+				,status = "primary" 
+				,solidHeader = TRUE 
+				,collapsible = TRUE 
+
+				,tags$head(
+					tags$style(type='text/css', 
+						".nav-tabs {font-size: 24px; font-weight: bold}")
+					)  
+				,tabBox(
+					width = 12,
+				#title = tags$h2("RDCs Weekly Capacity"),
+					tabPanel("Plot", plotlyOutput("wh_rdc"), height = "200px"),
+					tabPanel("Data", div(dataTableOutput('wh_rdcData'), style="font-size: 16px"))
+				       )
+		   )
+		)
+
+
+#------------------------------------------------------------------------------------------------
+## Performance : OTIF 
+#------------------------------------------------------------------------------------------------
+# otif_row1 <- fluidRow(
+#   tags$head(
+#      tags$style(type='text/css', 
+#                 ".nav-tabs {font-size: 24px; font-weight: bold}")
+#   )  
+#   ,tabBox(
+#    width = 6,
+#    #title = tags$h2("OTIF"), 
+#    tabPanel("Plot", plotlyOutput("otif_wk"), height = "200px"),
+#    tabPanel("Data", div(dataTableOutput('otif_wkData'), style="font-size: 16px"))
+#   )
+# )
+
+otif_row1 <- fluidRow(
+		box(
+			width = 9 
+			,title = "OTIF: Weekly Trend"
+			,status = "primary" 
+			,solidHeader = TRUE 
+			,collapsible = TRUE 
+
+			,tags$head(
+				tags$style(type='text/css', 
+					".nav-tabs {font-size: 24px; font-weight: bold}")
+				)  
+			,tabBox(
+				width = 12,
+			#title = tags$h2("OTIF"), 
+				tabPanel("Plot", plotlyOutput("otif_wk"), height = "200px"),
+				tabPanel("Data", div(dataTableOutput('otif_wkData'), style="font-size: 16px"))
+			       )
+		   )
+		)
+
+otif_row2 <- fluidRow(
+		box(
+			width = 9 
+			,title = "OTIF: By Plant Type"
+			,status = "primary" 
+			,solidHeader = TRUE 
+			,collapsible = TRUE 
+			,tableOutput("otif_by_plant")
+		   )
+		)
+
+otif_row3 <- fluidRow(
+		box(
+			width = 9 
+			,title = "OTIF: By Sold To Customer (Top 10 With Lowest OTIF)"
+			,status = "primary" 
+			,solidHeader = TRUE 
+			,collapsible = TRUE 
+			,tableOutput("otif_by_customer")
+		   )
+		)
+
+
+#------------------------------------------------------------------------------------------------
+## Performance : CARRIER 
+#------------------------------------------------------------------------------------------------
+carr_row1 <- fluidRow(
+		box(
+			width = 4
+			,title = "Select Carrier"
+			,selectizeInput("carr1",
+				label = "Carriers",
+				choices = unique(scar_n_by_carr$Carrier),
+				multiple = F,
+				options = list(maxItems = 1, placeholder = 'Select a name'),
+				selected = "CH ROBINSON")
+		   ),
+
+		box(
+			width = 8 
+			,title = "Total SCARs By Carrier"
+			,plotlyOutput("scar_n_carr", height = "300px")
+		   )
+		)
+
+carr_row2 <- fluidRow(
+		box(
+			width = 4
+			,title = "Select Carrier"
+			,selectizeInput("carr2",
+				label = "Carriers",
+				choices = unique(scar_n_by_carr_plant$Carrier),
+				multiple = F,
+				options = list(maxItems = 1, placeholder = 'Select a name'),
+				selected = "CH ROBINSON")
+			,selectizeInput("plant2",
+				label = "Plant",
+				choices = unique(scar_n_by_carr_plant$Plant),
+				multiple = F,
+				options = list(maxItems = 1, placeholder = 'Select a name'),
+				selected = "U001")
+		   ),
+
+		box(
+			width = 8 
+			,title = "Total SCARs By Carrier By Plant"
+			,plotlyOutput("scar_n_carr_plant", height = "300px")
+		   )
+		)
+
+#==============================================================================================
+
 #########
 ## body 
 #########
@@ -971,7 +1149,7 @@ body <- dashboardBody(
                                       .main-sidebar {
                                       font-family: "Georgia", Times, "Times New Roman", serif;
                                       font-weight: bold;
-                                      font-size: 22px;
+                                      font-size: 24px;
                                       }
 
                                       .skin-red .main-header .navbar {
@@ -1019,8 +1197,108 @@ body <- dashboardBody(
                                 
                         ),
                         
-                        tabItem(tabName = "perf_tab",
-                                h2("performance tab content")
+                        tabItem(tabName = "otif_tab",
+				otif_row1,
+				otif_row2,
+				otif_row3,
+
+                                # css style
+                                tags$head(tags$style(HTML('
+                                      .main-sidebar {
+                                      font-family: "Georgia", Times, "Times New Roman", serif;
+                                      font-weight: bold;
+                                      font-size: 24px;
+                                      }
+
+                                      .skin-red .main-header .navbar {
+                                      background-color: #FFD500;
+                                      }
+
+                                      .skin-red .main-header .logo {
+                                      background-color: #ED1C24;
+                                      font-family: "Georgia", Times, "Times New Roman", serif;
+                                      font-weight: bold;
+                                      font-size: 28px;
+                                      }
+
+                                      .skin-red .main-sidebar .sidebar .sidebar-menu .active a{
+                                      color: #FFD500;
+                                      }
+
+                                      .skin-red .main-sidebar .sidebar .sidebar-menu a:hover{
+                                      color: #FFD500;
+                                      }
+                                       
+                                  ')))
+                        ),
+
+                        tabItem(tabName = "wh_tab",
+				wh_row1,
+
+                                # css style
+                                tags$head(tags$style(HTML('
+                                      .main-sidebar {
+                                      font-family: "Georgia", Times, "Times New Roman", serif;
+                                      font-weight: bold;
+                                      font-size: 24px;
+                                      }
+
+                                      .skin-red .main-header .navbar {
+                                      background-color: #FFD500;
+                                      }
+
+                                      .skin-red .main-header .logo {
+                                      background-color: #ED1C24;
+                                      font-family: "Georgia", Times, "Times New Roman", serif;
+                                      font-weight: bold;
+                                      font-size: 28px;
+                                      }
+
+                                      .skin-red .main-sidebar .sidebar .sidebar-menu .active a{
+                                      color: #FFD500;
+                                      }
+
+                                      .skin-red .main-sidebar .sidebar .sidebar-menu a:hover{
+                                      color: #FFD500;
+                                      }
+                                       
+                                  ')))
+                        ),
+
+                        tabItem(tabName = "carr_tab",
+                                h2("Total SCARs by Carrier"),
+				carr_row1,
+                                h2("Total SCARs by Carrier by Plant"),
+				carr_row2,
+				
+                                # css style
+                                tags$head(tags$style(HTML('
+                                      .main-sidebar {
+                                      font-family: "Georgia", Times, "Times New Roman", serif;
+                                      font-weight: bold;
+                                      font-size: 24px;
+                                      }
+
+                                      .skin-red .main-header .navbar {
+                                      background-color: #FFD500;
+                                      }
+
+                                      .skin-red .main-header .logo {
+                                      background-color: #ED1C24;
+                                      font-family: "Georgia", Times, "Times New Roman", serif;
+                                      font-weight: bold;
+                                      font-size: 28px;
+                                      }
+
+                                      .skin-red .main-sidebar .sidebar .sidebar-menu .active a{
+                                      color: #FFD500;
+                                      }
+
+                                      .skin-red .main-sidebar .sidebar .sidebar-menu a:hover{
+                                      color: #FFD500;
+                                      }
+                                       
+                                  ')))
                         )
                         
                       ) #tabItems end
@@ -2514,8 +2792,148 @@ server <- function(input, output) {
      p
      
    })
+
+
+
+  #----------------------------------------
+  # Performance: WH 
+  #----------------------------------------
+  output$wh_lobp <- renderPlotly({
+     p <- plot_ly(x = wh_lobp$time, y = wh_lobp$Brockville, name = 'Brockville', 
+		  type = 'scatter', mode = 'lines+markers') %>%
+	add_trace(y = wh_lobp$CO, name='CO', mode ='lines+markers') %>%
+	add_trace(y = wh_lobp$HLP, name='HLP', mode ='lines+markers') %>%
+	add_trace(y = wh_lobp$LALP, name='LALP', mode ='lines+markers') %>%
+        layout(
+ 		title = "LOBPs Weekly Capacity",
+   		titlefont=list(size = 18),
+		yaxis = list(title = 'Capacity Utilization (%)', 
+                   titlefont=list(size=18), range=c(0,100), tickfont=list(size=16)),
+		xaxis = list(title='Date', titlefont=list(size=18), tickfont=list(size=16)))
+     
+     #p$elementId <- NULL
+     p
+  })
+
+  output$wh_rdc <- renderPlotly({
+     p <- plot_ly(x = wh_rdc$time, y = wh_rdc$Fontana, name = 'Fontana', 
+		  type = 'scatter', mode = 'lines+markers') %>%
+	add_trace(y = wh_rdc$HRDC, name='HRDC', mode ='lines+markers') %>%
+	add_trace(y = wh_rdc$Metro, name='Metro', mode ='lines+markers') %>%
+	add_trace(y = wh_rdc$ORDC, name='ORDC', mode ='lines+markers') %>%
+	add_trace(y = wh_rdc$Titan, name='Titan', mode ='lines+markers') %>%
+	add_trace(y = wh_rdc$Wills, name='Wills', mode ='lines+markers') %>%
+        layout(
+ 		title = "RDCs Weekly Capacity",
+   		titlefont=list(size = 18),
+		yaxis = list(title = 'Capacity Utilization (%)', 
+                   titlefont=list(size=18), range=c(0,120), tickfont=list(size=16)),
+		xaxis = list(title='Date', titlefont=list(size=18), tickfont=list(size=16)))
+     
+     #p$elementId <- NULL
+     p
+  })
+
+
+  output$wh_lobpData   <- renderDataTable({ wh_lobp })
+  output$wh_rdcData   <- renderDataTable({ wh_rdc })
    
-  
+  #----------------------------------------
+  # Performance: OTIF 
+  #----------------------------------------
+  ## weekly trend
+  output$otif_wk <- renderPlotly({
+     p <- plot_ly(x = otif_wk$Week, y = otif_wk$Target, name = 'Target', 
+		  type = 'scatter', mode = 'lines+markers', line=list(color='rgb(234,48,51)')) %>%
+	add_trace(y = otif_wk$Bulk, name='Bulk', mode ='lines+markers', line=list(color='rgb(7,98,241)')) %>%
+	add_trace(y = otif_wk$Pack, name='Pack', mode ='lines+markers', line=list(color='rgb(0,166,85)')) %>%
+	add_trace(y = otif_wk$Network, name='Network', mode ='lines+markers', line=list(color='rgb(203,0,247)')) %>%
+        layout(
+ 		title = "12-Week OTIF Trending", 
+   		titlefont=list(size = 18),
+		yaxis = list(title = 'OTIF (%)', 
+                   titlefont=list(size=18), c(min(otif_wk[,-1])-10,100), tickfont=list(size=16)),
+		xaxis = list(title='Week 2018', titlefont=list(size=18), tickfont=list(size=16)))
+     
+     #p$elementId <- NULL
+     p
+  })
+
+  output$otif_wkData   <- renderDataTable({ otif_wk })
+
+  ## segment by plant 
+  output$otif_by_plant <- function() {
+	otif_by_plant %>% 
+	mutate(OTIF_Pct = color_bar("lightgreen")(OTIF_Pct )) %>% 
+        kable( escape = F, align = c(rep("l", 4), rep('r', 6))) %>%  
+	kable_styling(bootstrap_options = c("striped", "hover", "condensed"),full_width = T, position = "left") %>%
+	column_spec(1, bold = T) %>%
+	collapse_rows(columns = 1:3, valign = "top")
+  }
+
+  ## segment by customer 
+  output$otif_by_customer <- function() {
+  	otif_by_customer %>% 
+        mutate(OTIF_Pct = color_bar("lightgreen")(OTIF_Pct )) %>% 
+  	kable( escape = F, align = c(rep("l", 4), rep('r', 6))) %>% 
+  	kable_styling(bootstrap_options = c("striped", "hover", "condensed"),full_width = T, position = "left") %>%
+  	column_spec(1, bold = T) %>%
+	collapse_rows(columns = 1:3, valign = "top")
+  }
+
+  #----------------------------------------
+  # Performance: CARRIER 
+  #----------------------------------------
+  ## SCAR n by Carr 
+  output$scar_n_carr <- renderPlotly({
+		  if (length(input$carr1) == 0) {
+		  print("Please select at least one carrier")
+		  } else {
+		  tot_carr <- scar_n_by_carr[scar_n_by_carr$Carrier == input$carr1, ]
+		  ggplot(tot_carr, aes(x = Month, y = n,  color = Carrier)) +
+		  geom_line(size=1, alpha=1) +
+		  geom_point(size=2) +
+		  labs(x = "Month", y = "Total SCARs") +
+		  scale_x_continuous(name="Month", limits=c(1, 5))+
+		  theme_minimal() +
+		  theme(
+			  legend.text = element_text(size=12),
+			  legend.title = element_text(size=12),
+			  axis.title.x = element_text(size=14),
+			  axis.title.y = element_text(size=14),
+			  plot.title = element_text(lineheight=.8, face="bold", size=18)
+#panel.background = element_blank()
+		       ) 
+
+		  }
+  })
+
+
+  output$scar_n_carr_plant <- renderPlotly({
+		  tot_carr_plant <- scar_n_by_carr_plant[scar_n_by_carr_plant$Carrier == input$carr2 & scar_n_by_carr_plant$Plant == input$plant2, ]
+		  validate(
+		    if (dim(tot_carr_plant)[1]==0){
+			    'No Data for this combination, please select another one'
+		    }
+			)
+
+		  ggplot(tot_carr_plant, aes(x = Month, y = n,  color = Carrier)) +
+		  geom_line(size=1, alpha=1) +
+		  geom_point(size=2) +
+		  labs(x = "Month", y = "Total SCARs") +
+		  scale_x_continuous(name="Month", limits=c(1, 5))+
+		  theme_minimal() +
+		  theme(
+			  legend.text = element_text(size=12),
+			  legend.title = element_text(size=12),
+			  axis.title.x = element_text(size=14),
+			  axis.title.y = element_text(size=14),
+			  plot.title = element_text(lineheight=.8, face="bold", size=18),
+			  legend.position="none"
+		       )
+		  })
+
+
 } # server end
 
 #########################
